@@ -1,0 +1,98 @@
+<div class="container">
+<h1>{{title}}</h1>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Open modal
+    </button>
+
+<div class="container" id="img">
+    <form action="add" method="post">
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content text-center" style="background-color:rgb(254,254,134)">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <input id="title" name="title" type="text" class="form-control" placeholder="Titel">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <textarea id="body" class="form-control notes" name="body" rows="10" maxlength="663" style="background-color:rgb(254,254,134); resize: none; overflow:auto;" ></textarea>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Sluit</button>
+
+                        <button type="submit" id="submit" class="btn btn-primary">Voeg toe</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+    {{#if notes}}
+    <div class="card-columns row">
+        {{#each notes}}
+
+
+                <div class="card text-center"  style="width: 200px; border: none;" >
+                    <img class="card-img-top"src="/images/note.png" alt="Card image">
+
+                    <div class="card-img-overlay" style="margin-top: 20px;">
+                        <h4 class="card-title text">{{title}}</h4>
+                            <form action="del" method="post">
+                                <input hidden value="{{title}}" name="title">
+                                <button type="submit" class="close" style="right:2px; top:-24px;position: absolute;font-size:2em;color:red;">&times;</button>
+                            </form>
+                        <div class="card-footer">
+                            <form action="show" method="get">
+                                <input hidden value="{{title}}" name="title">
+                                <button type="submit" class="btn btn-primary">Bekijk notitie</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+        {{/each}}
+    </div>
+    {{else}}
+        <h3>Geen notities gevonden</h3>
+    {{/if}}
+
+
+
+
+
+</div>
+
+
+<style type="text/css">
+    .notes
+    {
+        background-image: -webkit-linear-gradient(left, white 10px, transparent 10px), -webkit-linear-gradient(right, white 10px, transparent 10px), -webkit-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+        background-image: -moz-linear-gradient(left, white 10px, transparent 10px), -moz-linear-gradient(right, white 10px, transparent 10px), -moz-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+        background-image: -ms-linear-gradient(left, white 10px, transparent 10px), -ms-linear-gradient(right, white 10px, transparent 10px), -ms-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+        background-image: -o-linear-gradient(left, white 10px, transparent 10px), -o-linear-gradient(right, white 10px, transparent 10px), -o-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+        background-image: linear-gradient(left, white 10px, transparent 10px), linear-gradient(right, white 10px, transparent 10px), linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+        background-size: 100% 100%, 100% 100%, 100% 31px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 31px;
+        font-family: Arial, Helvetica, Sans-serif;
+        padding: 8px;
+
+    }
+    .notes:focus
+    {
+        outline: none;
+    }
+
+</style>
+

@@ -12,7 +12,6 @@ var helpers = require('handlebars-helper');
 //=> returns object with all (130+) helpers
 var bodyParser = require('body-parser');
 
-
 //Defined Routes
 const indexRouter = require('./routes/index');
 const addRouter = require('./routes/add');
@@ -33,23 +32,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Post Routes
 app.post('/add',addRouter);
 app.post('/del', delRouter);
-//GET Route and go to pre defined routes
+
+//GET Routes
 app.use('/', indexRouter);
 app.use('/add', addRouter);
 app.use('/del', delRouter);
 app.use('/show', showRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

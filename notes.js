@@ -2,6 +2,7 @@
 const fs = require('fs');
 
 //functions to use Modules
+//Pak alle notities van notes-data.json
 let fetchNotes = () => {
     try {
         let notesString = fs.readFileSync('notes-data.json');
@@ -12,46 +13,32 @@ let fetchNotes = () => {
 
 };
 
+//Sla notities op
 let saveNotes = (notes) => {
     fs.writeFileSync('notes-data.json', JSON.stringify(notes));
-};
-
-let delNotes = (title) => {
-
-    let notes = fetchNotes();
-    let note = {
-        title,
-        body
-    };
-    saveNotes(notes);
-};
-
-let showNotes = (note) => {
-    console.log('---');
-    console.log('Title: ' + note.title);
-    console.log('Body: ' + note.body);
 };
 
 //--------------------------------------------------
 
 let getAll = () => {
 
+    //Neem alle notities en stop ze in een array
     let notes = fetchNotes();
     if (notes.length === 0) {
-        return 'Test';
+        //Error
     }
     else {
         notes.forEach(function (note) {
             return note.title;
-
         })
     }
 
 };
 
 let addNote = (title, body) => {
-//node app.js add --title="" --body=""
+    //Neem alle notities en stop ze in een array
     let notes = fetchNotes();
+    //Met de vorm van:
     let note = {
         title,
         body
@@ -60,10 +47,9 @@ let addNote = (title, body) => {
     //afhandelen dubbele invoer
     let dubbleNoteAllowed = notes.filter((note) => note.title === title);
     if (title.length === 0 || body.length === 0) {
-        console.log('Vul alles in om een nieuwe notitie toe te voegen');
+        //Error
     }
     else {
-
 
         if (dubbleNoteAllowed.length === 0) {
 
@@ -72,69 +58,48 @@ let addNote = (title, body) => {
             return note;
         }
         else {
-            console.log('[notes.js] => Het bestand ' + title + ' bestaal al');
+            //Error
         }
     }
 };
 
 let getNote = (title) => {
-    //node app.js read --title="titel"
     if (title.length === 0) {
-        console.log('vul iets in om een notitie te lezen');
-        process.exit();
+        //Error
     }
     else {
 
-
+        //Neem alle notities en stop ze in een array
         let notes = fetchNotes();
-        //select note with title
+        //Selecteer notitie door title
         let filterNotes = notes.filter((note) => {
             return note.title === title;
         });
         if (filterNotes.length === 0) {
-
-            process.exit()
+            //Error
         }
         else {
             return filterNotes;
         }
-
-
     }
 
 };
 
 let delNote = (title) => {
     if (title.length === 0) {
-
+        //Error
     }
     else {
-
-
+        //Neem alle notities en stop ze in een array
         let notes = fetchNotes();
-
-        console.log(notes);
+        //Selecteer array die verwijdert moet worden door te vergelijken met de title
         let index = notes.findIndex(x => x.title === title);
-        console.log(index);
+        //Haal het object met de index eruit
         notes.splice(index, 1);
         saveNotes(notes);
     }
 };
 
-var removeByAttr = function (arr, attr, value) {
-
-    var i = arr.length;
-    while (i--) {
-        if (arr[i]
-            && arr[i].hasOwnProperty(attr)
-            && (arguments.length > 2 && arr[i][attr] === value)) {
-
-            arr.splice(i, 1);
-
-        }
-    }
-    return arr;
-};
 
 module.exports = {
     //Don't forget to export new functions!!
